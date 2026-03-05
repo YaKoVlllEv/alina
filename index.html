@@ -535,10 +535,11 @@
 </div>
 
             <!-- СЧЕТЧИК ОТНОШЕНИЙ -->
-            <div class="counter-section">
-                <div class="counter-title">💕 Мы вместе уже</div>
-                <div class="counter-number" id="daysCounter">0 дней</div>
-            </div>
+<div class="counter-section">
+    <div class="counter-title">💕 Мы вместе уже</div>
+    <div class="counter-number" id="daysCounter">0 дней</div>
+    <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
+</div>
 
             <!-- ПЛЕЙЛИСТ -->
             <div class="playlist-section">
@@ -602,7 +603,14 @@
 
     <script>
         // ЕДИНЫЙ СКРИПТ - всё в одном месте, без дублирования
-        (function() {
+
+            (function() {
+    // ДАТА НАЧАЛА ОТНОШЕНИЙ: 10 октября 2021
+    const startDate = new Date(2021, 9, 10, 0, 0, 0);
+    
+    // Функция для склонения слов...
+    // ... остальной код
+                
             // Функция для склонения слов
             function getYearText(years) {
                 if (years % 10 === 1 && years % 100 !== 11) return 'год';
@@ -623,40 +631,40 @@
             }
 
                         // 1. СЧЕТЧИК ДНЕЙ И ВРЕМЕНИ
-            function updateCounter() {
-                const counterElement = document.getElementById('daysCounter');
-                const timeElement = document.getElementById('timeCounter');
-                if (!counterElement || !timeElement) return;
-                
-                const now = new Date();
-                
-                // Разница в миллисекундах
-                const diffMs = now - startDate;
-                
-                // Дни
-                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                
-                // Часы, минуты, секунды (остаток от дней)
-                const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-                
-                // Склонение слова "день"
-                let daysText = 'дней';
-                if (diffDays % 10 === 1 && diffDays % 100 !== 11) daysText = 'день';
-                else if (diffDays % 10 >= 2 && diffDays % 10 <= 4 && (diffDays % 100 < 10 || diffDays % 100 >= 20)) daysText = 'дня';
-                
-                counterElement.textContent = diffDays + ' ' + daysText;
-                
-                // Форматируем время с ведущими нулями
-                const hoursStr = hours.toString().padStart(2, '0');
-                const minutesStr = minutes.toString().padStart(2, '0');
-                const secondsStr = seconds.toString().padStart(2, '0');
-                
-                timeElement.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
-                
-                addDetailedInfo(startDate, now);
-            }
+function updateCounter() {
+    const counterElement = document.getElementById('daysCounter');
+    const timeElement = document.getElementById('timeCounter');
+    if (!counterElement || !timeElement) return;
+    
+    const now = new Date();
+    
+    // Разница в миллисекундах
+    const diffMs = now - startDate;
+    
+    // Дни
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    // Часы, минуты, секунды (остаток от дней)
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+    
+    // Склонение слова "день"
+    let daysText = 'дней';
+    if (diffDays % 10 === 1 && diffDays % 100 !== 11) daysText = 'день';
+    else if (diffDays % 10 >= 2 && diffDays % 10 <= 4 && (diffDays % 100 < 10 || diffDays % 100 >= 20)) daysText = 'дня';
+    
+    counterElement.textContent = diffDays + ' ' + daysText;
+    
+    // Форматируем время с ведущими нулями
+    const hoursStr = hours.toString().padStart(2, '0');
+    const minutesStr = minutes.toString().padStart(2, '0');
+    const secondsStr = seconds.toString().padStart(2, '0');
+    
+    timeElement.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+    
+    addDetailedInfo(startDate, now);
+}
 
             function addDetailedInfo(startDate, now) {
                 const counterSection = document.querySelector('.counter-section');
