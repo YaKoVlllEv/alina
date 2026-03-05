@@ -137,13 +137,56 @@
             border-radius: 50px;
         }
 
-        /* Плейлист */
-        .playlist-section {
+        /* СПОЙЛЕР (общий стиль) */
+        .spoiler-section {
             background: rgba(255, 240, 245, 0.8);
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 25px;
             border: 2px solid #ffb3d1;
+        }
+
+        .spoiler-title {
+            color: #b34b71;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .spoiler-title:hover {
+            color: #ff4d8c;
+            transform: scale(1.05);
+        }
+
+        .spoiler-title .arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .spoiler-title.open .arrow {
+            transform: rotate(90deg);
+        }
+
+        .spoiler-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .spoiler-content.open {
+            max-height: 2000px;
+        }
+
+        /* Плейлист */
+        .playlist-section {
+            margin-top: 15px;
         }
 
         .playlist-title {
@@ -228,53 +271,6 @@
         }
 
         /* СПОЙЛЕР ДЛЯ "Почему я тебя люблю" */
-        .spoiler-section {
-            background: rgba(255, 240, 245, 0.8);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 2px solid #ffb3d1;
-        }
-
-        .spoiler-title {
-            color: #b34b71;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-        }
-
-        .spoiler-title:hover {
-            color: #ff4d8c;
-            transform: scale(1.05);
-        }
-
-        .spoiler-title .arrow {
-            font-size: 1.5rem;
-            transition: transform 0.3s;
-        }
-
-        .spoiler-title.open .arrow {
-            transform: rotate(90deg);
-        }
-
-        .spoiler-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .spoiler-content.open {
-            max-height: 500px;
-        }
-
         .reasons-list {
             list-style: none;
         }
@@ -313,39 +309,7 @@
             background: #ffe4f0;
         }
 
-        /* Конверт с письмом (только эмодзи) */
-        .letter-section {
-            margin-bottom: 25px;
-        }
-
-        .envelope {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 2px solid #ffb3d1;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .envelope.closed {
-            background: linear-gradient(145deg, #ffe4f0, #ffd9e6);
-        }
-
-        .envelope-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            color: #b34b71;
-            font-size: 2.5rem;
-        }
-
-        /* Кнопка-сюрприз - ОБНОВЛЕННАЯ */
+        /* Кнопка-сюрприз */
         .surprise-section {
             text-align: center;
             margin-bottom: 25px;
@@ -417,10 +381,9 @@
             }
         }
 
-        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - ОБНОВЛЕННЫЙ */
+        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ */
         .scratch-section {
-            margin-bottom: 25px;
-            text-align: center;
+            margin-top: 15px;
         }
 
         .scratch-title {
@@ -688,22 +651,6 @@
             margin: 0;
         }
 
-        .map-add-btn {
-            background: white;
-            border: 2px dashed #ff99c8;
-            padding: 12px;
-            border-radius: 50px;
-            width: 100%;
-            color: #b34b71;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .map-add-btn:hover {
-            background: #ffe4f0;
-        }
-
         .memory-popup {
             position: fixed;
             top: 50%;
@@ -917,11 +864,6 @@
                 font-size: 1.2rem;
                 padding: 15px 25px;
             }
-            
-            .envelope-header {
-                font-size: 2rem;
-                gap: 10px;
-            }
         }
     </style>
 </head>
@@ -948,25 +890,32 @@
                 <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
             </div>
 
-            <!-- ПЛЕЙЛИСТ -->
-            <div class="playlist-section">
-                <div class="playlist-title">🎵 Плейлист для тебя</div>
-                <div class="songs" id="playlist"></div>
+            <!-- СПОЙЛЕР ДЛЯ ПЛЕЙЛИСТА -->
+            <div class="spoiler-section">
+                <div class="spoiler-title" id="playlistSpoilerTitle">
+                    <span class="arrow">▶</span>
+                    <span>🎵 Плейлист для тебя</span>
+                </div>
+                <div class="spoiler-content" id="playlistSpoilerContent">
+                    <div class="playlist-section">
+                        <div class="songs" id="playlist"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- СПОЙЛЕР "Почему я тебя люблю" -->
             <div class="spoiler-section">
-                <div class="spoiler-title" id="spoilerTitle">
+                <div class="spoiler-title" id="reasonsSpoilerTitle">
                     <span class="arrow">▶</span>
                     <span>💗 Почему я тебя люблю</span>
                 </div>
-                <div class="spoiler-content" id="spoilerContent">
+                <div class="spoiler-content" id="reasonsSpoilerContent">
                     <ul class="reasons-list" id="reasonsList"></ul>
                     <button class="add-reason-btn" id="addReasonBtn">➕ Добавить причину</button>
                 </div>
             </div>
 
-            <!-- КНОПКА-СЮРПРИЗ - ОБНОВЛЕННАЯ -->
+            <!-- КНОПКА-СЮРПРИЗ -->
             <div class="surprise-section">
                 <button class="surprise-btn" id="surpriseBtn">
                     <span>✨</span>
@@ -976,19 +925,26 @@
                 <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
-            <!-- ОБНОВЛЕННЫЙ СТИРАЕМЫЙ БИЛЕТ -->
-            <div class="scratch-section">
-                <div class="scratch-title">🎫 Жмякни сюда, что-то тут интересное</div>
-                <div class="scratch-card" id="scratchCard">
-                    <div class="scratch-cover" id="scratchCover">
-                        <div class="scratch-pattern">🌟🌟🌟<br>ЖМЯКНИ<br>🌟🌟🌟</div>
-                    </div>
-                    <div class="scratch-prize" id="scratchPrize">
-                        <div class="prize-content">
-                            <span class="prize-emoji">🎁</span>
-                            <span class="prize-text">Твой подарок!</span>
-                            <a href="https://www.ozon.ru" class="prize-link" target="_blank">👉 Нажми сюда 👈</a>
-                            <div class="prize-hint">(откроется в новом окне)</div>
+            <!-- СПОЙЛЕР ДЛЯ ПОДАРКА -->
+            <div class="spoiler-section">
+                <div class="spoiler-title" id="giftSpoilerTitle">
+                    <span class="arrow">▶</span>
+                    <span>🎫 Жмякни сюда, что-то тут интересное</span>
+                </div>
+                <div class="spoiler-content" id="giftSpoilerContent">
+                    <div class="scratch-section">
+                        <div class="scratch-card" id="scratchCard">
+                            <div class="scratch-cover" id="scratchCover">
+                                <div class="scratch-pattern">🌟🌟🌟<br>ЖМЯКНИ<br>🌟🌟🌟</div>
+                            </div>
+                            <div class="scratch-prize" id="scratchPrize">
+                                <div class="prize-content">
+                                    <span class="prize-emoji">🎁</span>
+                                    <span class="prize-text">Твой подарок!</span>
+                                    <a href="https://www.ozon.ru" class="prize-link" target="_blank">👉 Нажми сюда 👈</a>
+                                    <div class="prize-hint">(откроется в новом окне)</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1327,27 +1283,36 @@
                 initReasons();
                 startSlider();
                 
-                // Конверт (только эмодзи, открывается/закрывается)
-                const envelope = document.getElementById('envelope');
-                if (envelope) {
-                    envelope.addEventListener('click', function() {
+                // СПОЙЛЕР для плейлиста
+                const playlistSpoilerTitle = document.getElementById('playlistSpoilerTitle');
+                const playlistSpoilerContent = document.getElementById('playlistSpoilerContent');
+                
+                if (playlistSpoilerTitle && playlistSpoilerContent) {
+                    playlistSpoilerTitle.addEventListener('click', function() {
                         this.classList.toggle('open');
-                        if (this.classList.contains('open')) {
-                            this.classList.remove('closed');
-                        } else {
-                            this.classList.add('closed');
-                        }
+                        playlistSpoilerContent.classList.toggle('open');
                     });
                 }
                 
                 // СПОЙЛЕР для "Почему я тебя люблю"
-                const spoilerTitle = document.getElementById('spoilerTitle');
-                const spoilerContent = document.getElementById('spoilerContent');
+                const reasonsSpoilerTitle = document.getElementById('reasonsSpoilerTitle');
+                const reasonsSpoilerContent = document.getElementById('reasonsSpoilerContent');
                 
-                if (spoilerTitle && spoilerContent) {
-                    spoilerTitle.addEventListener('click', function() {
+                if (reasonsSpoilerTitle && reasonsSpoilerContent) {
+                    reasonsSpoilerTitle.addEventListener('click', function() {
                         this.classList.toggle('open');
-                        spoilerContent.classList.toggle('open');
+                        reasonsSpoilerContent.classList.toggle('open');
+                    });
+                }
+                
+                // СПОЙЛЕР для подарка
+                const giftSpoilerTitle = document.getElementById('giftSpoilerTitle');
+                const giftSpoilerContent = document.getElementById('giftSpoilerContent');
+                
+                if (giftSpoilerTitle && giftSpoilerContent) {
+                    giftSpoilerTitle.addEventListener('click', function() {
+                        this.classList.toggle('open');
+                        giftSpoilerContent.classList.toggle('open');
                     });
                 }
                 
@@ -1503,48 +1468,6 @@
                     });
                 });
 
-                // Добавление нового воспоминания
-                const addMemoryBtn = document.getElementById('addMemoryBtn');
-                if (addMemoryBtn) {
-                    addMemoryBtn.addEventListener('click', () => {
-                        const place = prompt('Какое место добавить?', 'Наше любимое место');
-                        if (!place) return;
-                        
-                        const date = prompt('Когда это было? (например: 01.01.2022)', '');
-                        if (!date) return;
-                        
-                        const emoji = prompt('Какой эмодзи подходит? (например: 💕, 🌅, 🏖️)', '💕');
-                        
-                        // Создаем новый пин
-                        const mapPlaceholder = document.getElementById('mapPlaceholder');
-                        const newPin = document.createElement('div');
-                        newPin.className = 'map-pin';
-                        newPin.setAttribute('data-place', place);
-                        newPin.setAttribute('data-date', date);
-                        
-                        // Случайная позиция
-                        const top = Math.random() * 80 + 10;
-                        const left = Math.random() * 80 + 10;
-                        
-                        newPin.style.top = top + '%';
-                        newPin.style.left = left + '%';
-                        newPin.innerHTML = `
-                            <span class="pin-emoji">${emoji || '📍'}</span>
-                            <span class="pin-label">${place.substring(0, 10)}${place.length > 10 ? '...' : ''}</span>
-                        `;
-                        
-                        newPin.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            showMemory(newPin);
-                        });
-                        
-                        mapPlaceholder.appendChild(newPin);
-                        
-                        // Показываем сообщение
-                        alert('✨ Новое воспоминание добавлено!');
-                    });
-                }
-
                 // Обработка клика вне пинов (закрытие попапа)
                 document.addEventListener('click', function(e) {
                     if (!e.target.closest('.memory-popup') && !e.target.closest('.map-pin')) {
@@ -1560,7 +1483,7 @@
                     }
                 });
                 
-                // Сюрприз - ОБНОВЛЕННЫЙ (теперь с красивыми эмодзи)
+                // Сюрприз
                 const surpriseBtn = document.getElementById('surpriseBtn');
                 if (surpriseBtn) {
                     surpriseBtn.addEventListener('click', function() {
