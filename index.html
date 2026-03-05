@@ -399,7 +399,7 @@
             }
         }
 
-        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - НОВЫЙ БЛОК */
+        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - УЛУЧШЕННАЯ ВЕРСИЯ */
         .scratch-section {
             margin-bottom: 25px;
             text-align: center;
@@ -416,7 +416,7 @@
         .scratch-card {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 220px;
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
@@ -430,36 +430,54 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #c0c0c0, #a0a0a0);
+            background: linear-gradient(145deg, #a0a0a0, #808080);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2;
-            transition: opacity 0.3s;
+            transition: opacity 0.5s ease, transform 0.2s;
             border: 3px solid #ff99c8;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .scratch-cover:hover {
+            background: linear-gradient(145deg, #b0b0b0, #909090);
+        }
+
+        .scratch-cover:active {
+            transform: scale(0.97);
         }
 
         .scratch-cover.scratched {
             opacity: 0;
             pointer-events: none;
+            transform: scale(0.95);
         }
 
         .scratch-pattern {
             background: repeating-linear-gradient(
                 45deg,
-                #d0d0d0,
+                #c0c0c0,
+                #c0c0c0 10px,
                 #d0d0d0 10px,
-                #e0e0e0 10px,
-                #e0e0e0 20px
+                #d0d0d0 20px
             );
-            padding: 20px;
+            padding: 25px;
             border-radius: 20px;
-            color: #ff4d8c;
+            color: #ff3388;
             font-weight: bold;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             text-align: center;
-            text-shadow: 2px 2px 0 white;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.8);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            border: 2px dashed #ff99c8;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
         }
 
         .scratch-prize {
@@ -478,12 +496,24 @@
         .prize-content {
             text-align: center;
             padding: 20px;
+            animation: prizeAppear 0.5s ease;
+        }
+
+        @keyframes prizeAppear {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .prize-emoji {
-            font-size: 3rem;
+            font-size: 3.5rem;
             display: block;
             margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .prize-text {
@@ -506,11 +536,12 @@
             margin: 10px 0;
             border: 2px solid white;
             box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .prize-link:hover {
-            transform: scale(1.05);
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.6);
         }
 
         .prize-hint {
@@ -525,6 +556,24 @@
             color: #b34b71;
             font-size: 0.9rem;
             opacity: 0.8;
+            animation: hintPulse 2s infinite;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Эффекты для стирания */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Слайдер */
@@ -716,7 +765,7 @@
                 <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
-            <!-- НОВЫЙ БЛОК: СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ -->
+            <!-- УЛУЧШЕННЫЙ СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ -->
             <div class="scratch-section">
                 <div class="scratch-title">🎫 Сотри, чтобы узнать подарок</div>
                 <div class="scratch-card" id="scratchCard">
@@ -1087,16 +1136,79 @@
                     }
                 }
                 
-                // НОВЫЙ КОД: Стираемый билет
+                // УЛУЧШЕННЫЙ КОД: Стираемый билет с эффектами
                 const scratchCover = document.getElementById('scratchCover');
                 if (scratchCover) {
-                    scratchCover.addEventListener('click', function() {
-                        this.classList.add('scratched');
+                    // Эффект нажатия
+                    scratchCover.addEventListener('mousedown', function() {
+                        this.style.transform = 'scale(0.97)';
                     });
                     
+                    scratchCover.addEventListener('mouseup', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                    
+                    scratchCover.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                    
+                    // Основное действие - стирание
+                    scratchCover.addEventListener('click', function(e) {
+                        this.classList.add('scratched');
+                        
+                        // Создаем эффект "посыпания" блестками
+                        for (let i = 0; i < 8; i++) {
+                            setTimeout(() => {
+                                const sparkle = document.createElement('div');
+                                sparkle.style.position = 'absolute';
+                                sparkle.style.left = (e.clientX || window.innerWidth/2) + 'px';
+                                sparkle.style.top = (e.clientY || window.innerHeight/2) + 'px';
+                                sparkle.style.color = '#ff4d8c';
+                                sparkle.style.fontSize = '20px';
+                                sparkle.style.pointerEvents = 'none';
+                                sparkle.style.zIndex = '1000';
+                                sparkle.textContent = '✨';
+                                sparkle.style.animation = 'floatUp 1s forwards';
+                                document.body.appendChild(sparkle);
+                                
+                                setTimeout(() => sparkle.remove(), 1000);
+                            }, i * 100);
+                        }
+                    });
+                    
+                    // Для мобильных устройств
                     scratchCover.addEventListener('touchstart', function(e) {
                         e.preventDefault();
-                        this.classList.add('scratched');
+                        this.style.transform = 'scale(0.97)';
+                    });
+                    
+                    scratchCover.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                        this.style.transform = 'scale(1)';
+                        
+                        if (!this.classList.contains('scratched')) {
+                            this.classList.add('scratched');
+                            
+                            // Эффект для мобильных
+                            const touch = e.changedTouches[0];
+                            for (let i = 0; i < 5; i++) {
+                                setTimeout(() => {
+                                    const sparkle = document.createElement('div');
+                                    sparkle.style.position = 'absolute';
+                                    sparkle.style.left = touch.clientX + 'px';
+                                    sparkle.style.top = touch.clientY + 'px';
+                                    sparkle.style.color = '#ff4d8c';
+                                    sparkle.style.fontSize = '20px';
+                                    sparkle.style.pointerEvents = 'none';
+                                    sparkle.style.zIndex = '1000';
+                                    sparkle.textContent = '✨';
+                                    sparkle.style.animation = 'floatUp 1s forwards';
+                                    document.body.appendChild(sparkle);
+                                    
+                                    setTimeout(() => sparkle.remove(), 1000);
+                                }, i * 100);
+                            }
+                        }
                     });
                 }
                 
