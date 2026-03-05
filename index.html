@@ -227,24 +227,56 @@
             box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
         }
 
-        /* Список "Почему я тебя люблю" */
-        .reasons-section {
+        /* СПОЙЛЕР ДЛЯ "Почему я тебя люблю" */
+        .spoiler-section {
             background: rgba(255, 240, 245, 0.8);
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 25px;
+            border: 2px solid #ffb3d1;
         }
 
-        .reasons-title {
+        .spoiler-title {
             color: #b34b71;
             font-size: 1.2rem;
             margin-bottom: 15px;
             text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .spoiler-title:hover {
+            color: #ff4d8c;
+            transform: scale(1.05);
+        }
+
+        .spoiler-title .arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .spoiler-title.open .arrow {
+            transform: rotate(90deg);
+        }
+
+        .spoiler-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .spoiler-content.open {
+            max-height: 500px;
         }
 
         .reasons-list {
             list-style: none;
-            margin-bottom: 15px;
         }
 
         .reason-item {
@@ -274,13 +306,14 @@
             font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
+            margin-top: 15px;
         }
 
         .add-reason-btn:hover {
             background: #ffe4f0;
         }
 
-        /* Конверт с письмом */
+        /* Конверт с письмом (теперь без надписи) */
         .letter-section {
             margin-bottom: 25px;
         }
@@ -306,7 +339,7 @@
             justify-content: center;
             gap: 10px;
             color: #b34b71;
-            font-size: 1.2rem;
+            font-size: 2rem;
         }
 
         .letter-content {
@@ -399,7 +432,7 @@
             }
         }
 
-        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - ПОЛНОСТЬЮ СКРЫТАЯ ВЕРСИЯ */
+        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - ОБНОВЛЕННЫЙ */
         .scratch-section {
             margin-bottom: 25px;
             text-align: center;
@@ -561,20 +594,6 @@
             margin-top: 10px;
             opacity: 0.8;
             font-style: italic;
-        }
-
-        .scratch-hint {
-            margin-top: 12px;
-            color: #b34b71;
-            font-size: 1rem;
-            opacity: 0.9;
-            animation: hintPulse 2s infinite;
-            font-weight: 500;
-        }
-
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; text-shadow: 0 0 5px #ff99c8; }
         }
 
         /* Эффекты для стирания */
@@ -940,18 +959,24 @@
                 <div class="songs" id="playlist"></div>
             </div>
 
-            <!-- СПИСОК "ПОЧЕМУ Я ТЕБЯ ЛЮБЛЮ" -->
-            <div class="reasons-section">
-                <div class="reasons-title">💗 Почему я тебя люблю</div>
-                <ul class="reasons-list" id="reasonsList"></ul>
+            <!-- СПОЙЛЕР "Почему я тебя люблю" -->
+            <div class="spoiler-section">
+                <div class="spoiler-title" id="spoilerTitle">
+                    <span class="arrow">▶</span>
+                    <span>💗 Почему я тебя люблю</span>
+                </div>
+                <div class="spoiler-content" id="spoilerContent">
+                    <ul class="reasons-list" id="reasonsList"></ul>
+                    <button class="add-reason-btn" id="addReasonBtn">➕ Добавить причину</button>
+                </div>
             </div>
 
-            <!-- КОНВЕРТ С ПИСЬМОМ -->
+            <!-- КОНВЕРТ С ПИСЬМОМ (без текста) -->
             <div class="letter-section">
                 <div class="envelope closed" id="envelope">
                     <div class="envelope-header">
                         <span>💌</span>
-                        <span>Нажми, чтобы прочитать письмо</span>
+                        <span>💌</span>
                         <span>💌</span>
                     </div>
                     <div class="letter-content">
@@ -972,12 +997,12 @@
                 <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
-            <!-- ИСПРАВЛЕННЫЙ СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ -->
+            <!-- ОБНОВЛЕННЫЙ СТИРАЕМЫЙ БИЛЕТ -->
             <div class="scratch-section">
-                <div class="scratch-title">🎫 Сотри, чтобы узнать подарок</div>
+                <div class="scratch-title">🎫 Жмякни сюда, что-то тут интересное</div>
                 <div class="scratch-card" id="scratchCard">
                     <div class="scratch-cover" id="scratchCover">
-                        <div class="scratch-pattern">🌟🌟🌟<br>СОТРИ МЕНЯ<br>🌟🌟🌟</div>
+                        <div class="scratch-pattern">🌟🌟🌟<br>ЖМЯКНИ<br>🌟🌟🌟</div>
                     </div>
                     <div class="scratch-prize" id="scratchPrize">
                         <div class="prize-content">
@@ -988,7 +1013,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="scratch-hint">Проведи пальцем по серому слою, чтобы стереть</div>
             </div>
 
             <!-- КАРТА ВОСПОМИНАНИЙ -->
@@ -1002,7 +1026,7 @@
                         </div>
                         <div class="map-pin" style="top: 70%; left: 60%;" data-place="Татышев парк, где гуляли чаще всего и начало наших отношений" data-date="10.10.2021">
                             <span class="pin-emoji">🌳💑</span>
-                            <span class="pin-label">Парк и новый этап в жизни</span>
+                            <span class="pin-label">Парк и новый этап</span>
                         </div>
                         <div class="map-pin" style="top: 40%; left: 75%;" data-place="Хочу пури - это наше любимое заведение">
                             <span class="pin-emoji">☕</span>
@@ -1325,7 +1349,7 @@
                 initReasons();
                 startSlider();
                 
-                // Конверт
+                // Конверт (без текста)
                 const envelope = document.getElementById('envelope');
                 if (envelope) {
                     envelope.addEventListener('click', function() {
@@ -1338,7 +1362,18 @@
                     });
                 }
                 
-                // Добавление причины (кнопка)
+                // СПОЙЛЕР для "Почему я тебя люблю"
+                const spoilerTitle = document.getElementById('spoilerTitle');
+                const spoilerContent = document.getElementById('spoilerContent');
+                
+                if (spoilerTitle && spoilerContent) {
+                    spoilerTitle.addEventListener('click', function() {
+                        this.classList.toggle('open');
+                        spoilerContent.classList.toggle('open');
+                    });
+                }
+                
+                // Добавление причины
                 const addReasonBtn = document.getElementById('addReasonBtn');
                 if (addReasonBtn) {
                     addReasonBtn.addEventListener('click', function() {
@@ -1351,25 +1386,6 @@
                             reasonsList.appendChild(li);
                         }
                     });
-                } else {
-                    const reasonsSection = document.querySelector('.reasons-section');
-                    if (reasonsSection) {
-                        const btn = document.createElement('button');
-                        btn.className = 'add-reason-btn';
-                        btn.id = 'addReasonBtn';
-                        btn.textContent = '➕ Добавить причину';
-                        btn.onclick = function() {
-                            const newReason = prompt('Напиши еще одну причину:', 'Твоя...');
-                            if (newReason && newReason.trim() !== '') {
-                                const reasonsList = document.getElementById('reasonsList');
-                                const li = document.createElement('li');
-                                li.className = 'reason-item';
-                                li.innerHTML = `<span class="reason-emoji">❤️</span> ${newReason}`;
-                                reasonsList.appendChild(li);
-                            }
-                        };
-                        reasonsSection.appendChild(btn);
-                    }
                 }
                 
                 // УЛУЧШЕННЫЙ СТИРАЕМЫЙ БИЛЕТ
@@ -1480,7 +1496,7 @@
                         <p style="margin:0;">
                             <span style="font-size:1.5rem; margin-right:10px;">${emoji}</span>
                             <strong>${place}</strong><br>
-                            <span style="font-size:0.9rem; color:#b34b71;">${date}</span>
+                            <span style="font-size:0.9rem; color:#b34b71;">${date ? date : ''}</span>
                         </p>
                     `;
                     
@@ -1492,7 +1508,7 @@
                     popup.className = 'memory-popup';
                     popup.innerHTML = `
                         <h3>${emoji} ${place}</h3>
-                        <p>💕 ${date}</p>
+                        <p>💕 ${date ? date : 'Незабываемое место'}</p>
                         <p style="font-style:italic;">"Самое прекрасное воспоминание..."</p>
                         <button onclick="this.parentElement.remove(); document.querySelector('.popup-overlay').remove();">Закрыть</button>
                     `;
