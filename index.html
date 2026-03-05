@@ -622,48 +622,57 @@
                 return 'дней';
             }
 
-            // 1. СЧЕТЧИК ДНЕЙ
+                        // 1. СЧЕТЧИК ДНЕЙ И ВРЕМЕНИ
             function updateCounter() {
                 const counterElement = document.getElementById('daysCounter');
-                if (!counterElement) return;
+                const timeElement = document.getElementById('timeCounter');
+                if (!counterElement || !timeElement) return;
                 
-                const startDate = new Date(2021, 9, 10); // 10 октября 2021
-                const today = new Date();
+                const now = new Date();
                 
-                const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-                const current = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                // Разница в миллисекундах
+                const diffMs = now - startDate;
                 
-                const diffTime = current - start;
-                const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+                // Дни
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                 
+                // Часы, минуты, секунды (остаток от дней)
+                const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+                
+                // Склонение слова "день"
                 let daysText = 'дней';
                 if (diffDays % 10 === 1 && diffDays % 100 !== 11) daysText = 'день';
                 else if (diffDays % 10 >= 2 && diffDays % 10 <= 4 && (diffDays % 100 < 10 || diffDays % 100 >= 20)) daysText = 'дня';
                 
                 counterElement.textContent = diffDays + ' ' + daysText;
                 
-                // Добавляем детальную информацию
-                addDetailedInfo();
+                // Форматируем время с ведущими нулями
+                const hoursStr = hours.toString().padStart(2, '0');
+                const minutesStr = minutes.toString().padStart(2, '0');
+                const secondsStr = seconds.toString().padStart(2, '0');
+                
+                timeElement.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+                
+                addDetailedInfo(startDate, now);
             }
 
-            function addDetailedInfo() {
+            function addDetailedInfo(startDate, now) {
                 const counterSection = document.querySelector('.counter-section');
                 if (!counterSection) return;
                 
                 const oldInfo = document.getElementById('detailedInfo');
                 if (oldInfo) oldInfo.remove();
                 
-                const startDate = new Date(2021, 9, 10);
-                const today = new Date();
+                let years = now.getFullYear() - startDate.getFullYear();
+                let months = now.getMonth() - startDate.getMonth();
+                let days = now.getDate() - startDate.getDate();
                 
-                let years = today.getFullYear() - startDate.getFullYear();
-                let months = today.getMonth() - startDate.getMonth();
-                let daysInMonth = today.getDate() - startDate.getDate();
-                
-                if (daysInMonth < 0) {
+                if (days < 0) {
                     months--;
-                    const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-                    daysInMonth += lastMonth.getDate();
+                    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                    days += lastMonth.getDate();
                 }
                 
                 if (months < 0) {
@@ -671,15 +680,21 @@
                     months += 12;
                 }
                 
-                const yearText = getYearText(years);
-                const monthText = getMonthText(months);
-                const dayText = getDayText(daysInMonth);
+                const yearText = getText(years, 'год', 'года', 'лет');
+                const monthText = getText(months, 'месяц', 'месяца', 'месяцев');
+                const dayText = getText(days, 'день', 'дня', 'дней');
                 
                 const detailedInfo = document.createElement('div');
                 detailedInfo.id = 'detailedInfo';
-                detailedInfo.innerHTML = `✨ ${years} ${yearText}, ${months} ${monthText}, ${daysInMonth} ${dayText} ✨`;
+                detailedInfo.innerHTML = `✨ ${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText} ✨`;
                 
                 counterSection.appendChild(detailedInfo);
+            }
+
+            function getText(number, form1, form2, form5) {
+                if (number % 10 === 1 && number % 100 !== 11) return form1;
+                if (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) return form2;
+                return form5;
             }
 
             // 2. ПЛЕЙЛИСТ
@@ -748,11 +763,11 @@
                 if (!reasonsList) return;
                 
                 const reasons = [
-                    '😊 Твоя улыбка',
-                    '💕 Твоя доброта',
-                    '🌟 Твой смех',
-                    '🤗 Твои объятия',
-                    '👀 Твои глаза'
+                    'Твоя улыбка 😊',
+                    'Твоя доброта 💕',
+                    'Твой смех 🌟',
+                    'Твои объятия 🤗',
+                    'Твои глаза 👀'
                 ];
                 
                 reasonsList.innerHTML = '';
