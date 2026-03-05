@@ -313,7 +313,7 @@
             background: #ffe4f0;
         }
 
-        /* Конверт с письмом (теперь без надписи) */
+        /* Конверт с письмом (только эмодзи) */
         .letter-section {
             margin-bottom: 25px;
         }
@@ -327,6 +327,9 @@
             border: 2px solid #ffb3d1;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .envelope.closed {
@@ -337,34 +340,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             color: #b34b71;
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
-        .letter-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-            margin-top: 0;
-        }
-
-        .envelope.open .letter-content {
-            max-height: 300px;
-            margin-top: 20px;
-        }
-
-        .letter-text {
-            background: #fff9e6;
-            padding: 20px;
-            border-radius: 15px;
-            color: #a63b5e;
-            line-height: 1.6;
-            font-style: italic;
-            border: 1px solid #ffd9e6;
-        }
-
-        /* Кнопка-сюрприз */
+        /* Кнопка-сюрприз - ОБНОВЛЕННАЯ */
         .surprise-section {
             text-align: center;
             margin-bottom: 25px;
@@ -376,12 +357,16 @@
             border: none;
             padding: 18px 35px;
             border-radius: 60px;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
             border: 2px solid white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .surprise-btn:hover {
@@ -927,6 +912,16 @@
             .pin-label {
                 font-size: 0.7rem;
             }
+            
+            .surprise-btn {
+                font-size: 1.2rem;
+                padding: 15px 25px;
+            }
+            
+            .envelope-header {
+                font-size: 2rem;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -971,7 +966,7 @@
                 </div>
             </div>
 
-            <!-- КОНВЕРТ С ПИСЬМОМ (без текста) -->
+            <!-- КОНВЕРТ С ПИСЬМОМ (ТОЛЬКО ЭМОДЗИ) -->
             <div class="letter-section">
                 <div class="envelope closed" id="envelope">
                     <div class="envelope-header">
@@ -979,21 +974,16 @@
                         <span>💌</span>
                         <span>💌</span>
                     </div>
-                    <div class="letter-content">
-                        <div class="letter-text">
-                            Моя любимая! <br><br>
-                            Ты самый удивительный человек в моей жизни. 
-                            Спасибо тебе за твою улыбку, заботу и тепло. 
-                            С 8 Марта! Пусть каждый твой день будет таким же прекрасным, как ты. <br><br>
-                            Целую 💕
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- КНОПКА-СЮРПРИЗ -->
+            <!-- КНОПКА-СЮРПРИЗ - ОБНОВЛЕННАЯ -->
             <div class="surprise-section">
-                <button class="surprise-btn" id="surpriseBtn">🎁 Нажми для сюрприза</button>
+                <button class="surprise-btn" id="surpriseBtn">
+                    <span>✨</span>
+                    <span>Особенное про тебя</span>
+                    <span>💫</span>
+                </button>
                 <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
@@ -1349,7 +1339,7 @@
                 initReasons();
                 startSlider();
                 
-                // Конверт (без текста)
+                // Конверт (только эмодзи, открывается/закрывается)
                 const envelope = document.getElementById('envelope');
                 if (envelope) {
                     envelope.addEventListener('click', function() {
@@ -1582,17 +1572,17 @@
                     }
                 });
                 
-                // Сюрприз
+                // Сюрприз - ОБНОВЛЕННЫЙ (теперь с красивыми эмодзи)
                 const surpriseBtn = document.getElementById('surpriseBtn');
                 if (surpriseBtn) {
                     surpriseBtn.addEventListener('click', function() {
                         const messageElement = document.getElementById('surpriseMessage');
                         const surprises = [
-                            '🎂 Ты самая лучшая!',
-                            '🌟 Ты невероятная!',
-                            '💝 Я тебя люблю!',
-                            '🌸 Ты как цветок!',
-                            '✨ Ты мое счастье!'
+                            '✨ Ты самая удивительная! ✨',
+                            '💫 Ты невероятная! 💫',
+                            '🌟 Ты мое вдохновение! 🌟',
+                            '🌸 Ты прекрасна! 🌸',
+                            '💖 Я тебя люблю! 💖'
                         ];
                         
                         for (let i = 0; i < 10; i++) {
@@ -1600,7 +1590,7 @@
                         }
                         
                         const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
-                        messageElement.textContent = randomSurprise + ' 🎉';
+                        messageElement.textContent = randomSurprise;
                         messageElement.style.display = 'block';
                         
                         setTimeout(() => {
