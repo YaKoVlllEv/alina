@@ -184,6 +184,52 @@
             max-height: 2000px;
         }
 
+        /* Кнопка-сюрприз */
+        .surprise-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .surprise-btn {
+            background: linear-gradient(45deg, #ff4d8c, #ff99c8);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+            border: 2px solid white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .surprise-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.5);
+        }
+
+        .surprise-message {
+            background: white;
+            margin-top: 15px;
+            padding: 20px;
+            border-radius: 30px;
+            color: #b34b71;
+            font-size: 1.2rem;
+            display: none;
+            animation: pop 0.5s;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         /* Плейлист */
         .playlist-section {
             margin-top: 15px;
@@ -307,52 +353,6 @@
 
         .add-reason-btn:hover {
             background: #ffe4f0;
-        }
-
-        /* Кнопка-сюрприз */
-        .surprise-section {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .surprise-btn {
-            background: linear-gradient(45deg, #ff4d8c, #ff99c8);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 60px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
-            border: 2px solid white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .surprise-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.5);
-        }
-
-        .surprise-message {
-            background: white;
-            margin-top: 15px;
-            padding: 20px;
-            border-radius: 30px;
-            color: #b34b71;
-            font-size: 1.2rem;
-            display: none;
-            animation: pop 0.5s;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
 
         /* Шарики */
@@ -558,11 +558,7 @@
 
         /* КАРТА ВОСПОМИНАНИЙ */
         .map-section {
-            background: rgba(255, 240, 245, 0.8);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 2px solid #ffb3d1;
+            margin-top: 15px;
         }
 
         .map-title {
@@ -890,6 +886,16 @@
                 <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
             </div>
 
+            <!-- КНОПКА-СЮРПРИЗ (ПЕРЕНЕСЕНА НАВЕРХ) -->
+            <div class="surprise-section">
+                <button class="surprise-btn" id="surpriseBtn">
+                    <span>✨</span>
+                    <span>Особенное про тебя</span>
+                    <span>💫</span>
+                </button>
+                <div class="surprise-message" id="surpriseMessage"></div>
+            </div>
+
             <!-- СПОЙЛЕР ДЛЯ ПЛЕЙЛИСТА -->
             <div class="spoiler-section">
                 <div class="spoiler-title" id="playlistSpoilerTitle">
@@ -913,16 +919,6 @@
                     <ul class="reasons-list" id="reasonsList"></ul>
                     <button class="add-reason-btn" id="addReasonBtn">➕ Добавить причину</button>
                 </div>
-            </div>
-
-            <!-- КНОПКА-СЮРПРИЗ -->
-            <div class="surprise-section">
-                <button class="surprise-btn" id="surpriseBtn">
-                    <span>✨</span>
-                    <span>Особенное про тебя</span>
-                    <span>💫</span>
-                </button>
-                <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
             <!-- СПОЙЛЕР ДЛЯ ПОДАРКА -->
@@ -950,31 +946,38 @@
                 </div>
             </div>
 
-            <!-- КАРТА ВОСПОМИНАНИЙ -->
-            <div class="map-section">
-                <div class="map-title">📍 Наша карта воспоминаний</div>
-                <div class="map-container" id="mapContainer">
-                    <div class="map-placeholder" id="mapPlaceholder">
-                        <div class="map-pin" style="top: 30%; left: 20%;" data-place="Красноярский кооперативный техникум Экономики, Коммерции и Права" data-date="01.09.2021">
-                            <span class="pin-emoji">📍</span>
-                            <span class="pin-label">Встреча</span>
+            <!-- СПОЙЛЕР ДЛЯ КАРТЫ ВОСПОМИНАНИЙ -->
+            <div class="spoiler-section">
+                <div class="spoiler-title" id="mapSpoilerTitle">
+                    <span class="arrow">▶</span>
+                    <span>📍 Наша карта воспоминаний</span>
+                </div>
+                <div class="spoiler-content" id="mapSpoilerContent">
+                    <div class="map-section">
+                        <div class="map-container" id="mapContainer">
+                            <div class="map-placeholder" id="mapPlaceholder">
+                                <div class="map-pin" style="top: 30%; left: 20%;" data-place="Красноярский кооперативный техникум Экономики, Коммерции и Права" data-date="01.09.2021">
+                                    <span class="pin-emoji">📍</span>
+                                    <span class="pin-label">Встреча</span>
+                                </div>
+                                <div class="map-pin" style="top: 70%; left: 60%;" data-place="Татышев парк, где гуляли чаще всего и начало наших отношений" data-date="10.10.2021">
+                                    <span class="pin-emoji">🌳💑</span>
+                                    <span class="pin-label">Парк и новый этап</span>
+                                </div>
+                                <div class="map-pin" style="top: 40%; left: 75%;" data-place="Хочу пури - это наше любимое заведение">
+                                    <span class="pin-emoji">☕</span>
+                                    <span class="pin-label">Ресторан</span>
+                                </div>
+                                <div class="map-pin" style="top: 60%; left: 85%;" data-place="Наш первый поход в кинотеатр и совместная прогулка" data-date="06.10.2021">
+                                    <span class="pin-emoji">🎬</span>
+                                    <span class="pin-label">Кино</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="map-pin" style="top: 70%; left: 60%;" data-place="Татышев парк, где гуляли чаще всего и начало наших отношений" data-date="10.10.2021">
-                            <span class="pin-emoji">🌳💑</span>
-                            <span class="pin-label">Парк и новый этап</span>
-                        </div>
-                        <div class="map-pin" style="top: 40%; left: 75%;" data-place="Хочу пури - это наше любимое заведение">
-                            <span class="pin-emoji">☕</span>
-                            <span class="pin-label">Ресторан</span>
-                        </div>
-                        <div class="map-pin" style="top: 60%; left: 85%;" data-place="Наш первый поход в кинотеатр и совместная прогулка" data-date="06.10.2021">
-                            <span class="pin-emoji">🎬</span>
-                            <span class="pin-label">Кино</span>
+                        <div class="map-info" id="mapInfo">
+                            <p>👆 Нажми на любой значок, чтобы увидеть воспоминание</p>
                         </div>
                     </div>
-                </div>
-                <div class="map-info" id="mapInfo">
-                    <p>👆 Нажми на любой значок, чтобы увидеть воспоминание</p>
                 </div>
             </div>
 
@@ -1316,6 +1319,17 @@
                     });
                 }
                 
+                // СПОЙЛЕР для карты воспоминаний
+                const mapSpoilerTitle = document.getElementById('mapSpoilerTitle');
+                const mapSpoilerContent = document.getElementById('mapSpoilerContent');
+                
+                if (mapSpoilerTitle && mapSpoilerContent) {
+                    mapSpoilerTitle.addEventListener('click', function() {
+                        this.classList.toggle('open');
+                        mapSpoilerContent.classList.toggle('open');
+                    });
+                }
+                
                 // Добавление причины
                 const addReasonBtn = document.getElementById('addReasonBtn');
                 if (addReasonBtn) {
@@ -1425,7 +1439,7 @@
                     });
                 }
                 
-                // КАРТА ВОСПОМИНАНИЙ
+                // КАРТА ВОСПОМИНАНИЙ (обработчики)
                 const mapPins = document.querySelectorAll('.map-pin');
                 const mapInfo = document.getElementById('mapInfo');
 
