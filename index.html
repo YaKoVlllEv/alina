@@ -589,6 +589,172 @@
             }
         }
 
+        /* КАРТА ВОСПОМИНАНИЙ */
+        .map-section {
+            background: rgba(255, 240, 245, 0.8);
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #ffb3d1;
+        }
+
+        .map-title {
+            color: #b34b71;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+            margin-bottom: 15px;
+        }
+
+        .map-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #a8d8ff, #7fb5d0);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23a8d8ff"/><circle cx="20" cy="20" r="15" fill="%2380b3ff" opacity="0.3"/><circle cx="80" cy="60" r="25" fill="%2380b3ff" opacity="0.3"/><circle cx="40" cy="80" r="20" fill="%2380b3ff" opacity="0.3"/><path d="M0 50 L100 50" stroke="%236699cc" stroke-width="1" opacity="0.2"/><path d="M50 0 L50 100" stroke="%236699cc" stroke-width="1" opacity="0.2"/></svg>');
+            background-size: cover;
+            border-radius: 20px;
+            border: 2px solid white;
+        }
+
+        .map-pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+            text-align: center;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
+        }
+
+        .map-pin:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 20;
+        }
+
+        .pin-emoji {
+            font-size: 2rem;
+            display: block;
+            animation: pinBounce 2s infinite;
+        }
+
+        @keyframes pinBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .pin-label {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #b34b71;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #ff99c8;
+        }
+
+        .map-info {
+            background: white;
+            border-radius: 50px;
+            padding: 15px 20px;
+            text-align: center;
+            color: #a63b5e;
+            font-size: 1.1rem;
+            border: 2px dashed #ff99c8;
+            margin-bottom: 15px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-info p {
+            margin: 0;
+        }
+
+        .map-add-btn {
+            background: white;
+            border: 2px dashed #ff99c8;
+            padding: 12px;
+            border-radius: 50px;
+            width: 100%;
+            color: #b34b71;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .map-add-btn:hover {
+            background: #ffe4f0;
+        }
+
+        .memory-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.4);
+            z-index: 1000;
+            max-width: 300px;
+            width: 90%;
+            border: 3px solid #ff99c8;
+            animation: popupAppear 0.3s;
+        }
+
+        @keyframes popupAppear {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .memory-popup h3 {
+            color: #ff4d8c;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .memory-popup p {
+            color: #a63b5e;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .memory-popup button {
+            background: linear-gradient(45deg, #ff4d8c, #ff99c8);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+        }
+
         /* Слайдер */
         .slider-container {
             position: relative;
@@ -730,6 +896,18 @@
             .prize-text {
                 font-size: 1.3rem;
             }
+            
+            .map-container {
+                height: 250px;
+            }
+            
+            .pin-emoji {
+                font-size: 1.8rem;
+            }
+            
+            .pin-label {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
@@ -811,6 +989,39 @@
                     </div>
                 </div>
                 <div class="scratch-hint">Проведи пальцем по серому слою, чтобы стереть</div>
+            </div>
+
+            <!-- КАРТА ВОСПОМИНАНИЙ -->
+            <div class="map-section">
+                <div class="map-title">📍 Наша карта воспоминаний</div>
+                <div class="map-container" id="mapContainer">
+                    <div class="map-placeholder" id="mapPlaceholder">
+                        <div class="map-pin" style="top: 30%; left: 20%;" data-place="Место нашей встречи" data-date="10.10.2021">
+                            <span class="pin-emoji">📍</span>
+                            <span class="pin-label">Встреча</span>
+                        </div>
+                        <div class="map-pin" style="top: 50%; left: 40%;" data-place="Первое свидание" data-date="15.10.2021">
+                            <span class="pin-emoji">💑</span>
+                            <span class="pin-label">Свидание</span>
+                        </div>
+                        <div class="map-pin" style="top: 70%; left: 60%;" data-place="Парк, где гуляли" data-date="20.10.2021">
+                            <span class="pin-emoji">🌳</span>
+                            <span class="pin-label">Парк</span>
+                        </div>
+                        <div class="map-pin" style="top: 40%; left: 75%;" data-place="Наше любимое кафе" data-date="05.11.2021">
+                            <span class="pin-emoji">☕</span>
+                            <span class="pin-label">Кафе</span>
+                        </div>
+                        <div class="map-pin" style="top: 60%; left: 85%;" data-place="Кинотеатр" data-date="12.11.2021">
+                            <span class="pin-emoji">🎬</span>
+                            <span class="pin-label">Кино</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-info" id="mapInfo">
+                    <p>👆 Нажми на любой значок, чтобы увидеть воспоминание</p>
+                </div>
+                <button class="map-add-btn" id="addMemoryBtn">➕ Добавить новое воспоминание</button>
             </div>
 
             <!-- СЛАЙДЕР С ФОТО -->
@@ -919,63 +1130,63 @@
             }
 
            // 2. ПЛЕЙЛИСТ - ИСПРАВЛЕННАЯ ВЕРСИЯ С РАБОЧИМИ ССЫЛКАМИ
-function initPlaylist() {
-    const playlistElement = document.getElementById('playlist');
-    if (!playlistElement) return;
-    
-    const songs = [
-        {
-            name: 'Далеко',
-            artist: 'Рем Дигга',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/24208302/2815224">Слушайте <a href="https://music.yandex.ru/album/2815224/track/24208302">Далеко</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-        },
-        {
-            name: 'Она',
-            artist: 'Рем Дигга',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/19676891/1844251">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-        },
-        {
-            name: 'Я или он',
-            artist: 'Рем Дигга',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/45989484/6187789">Слушайте <a href="https://music.yandex.ru/album/6187789/track/45989484">Я или он</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-        },
-        {
-            name: 'Четырнадцать',
-            artist: 'Рем Дигга',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/27393332/3280080">Слушайте <a href="https://music.yandex.ru/album/3280080/track/27393332">Четырнадцать</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-        },
-        {
-            name: 'Одна любовь',
-            artist: 'Баста, Рем Дигга',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/48592381/10121686">Слушайте <a href="https://music.yandex.ru/album/10121686/track/48592381">Одна любовь</a> — <a href="https://music.yandex.ru/artist/41191">Баста</a> на Яндекс Музыке</iframe>'
-        },
-        {
-            name: 'Мир на двоих',
-            artist: 'Xcho',
-            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/123237021/29998115">Слушайте <a href="https://music.yandex.ru/album/29998115/track/123237021">Мир на двоих</a> — <a href="https://music.yandex.ru/artist/7251201">Xcho</a> на Яндекс Музыке</iframe>'
-        }
-    ];
-    
-    playlistElement.innerHTML = '';
-    songs.forEach((song, index) => {
-        const songItem = document.createElement('div');
-        songItem.className = 'song-item';
-        
-        songItem.innerHTML = `
-            <div class="song-header">
-                <span class="song-number">${index + 1}</span>
-                <div class="song-info">
-                    <div class="song-name">${song.name}</div>
-                    <div class="song-artist">${song.artist}</div>
-                </div>
-            </div>
-            <div class="yandex-player">
-                ${song.embedCode}
-            </div>
-        `;
-        playlistElement.appendChild(songItem);
-    });
-}
+            function initPlaylist() {
+                const playlistElement = document.getElementById('playlist');
+                if (!playlistElement) return;
+                
+                const songs = [
+                    {
+                        name: 'Далеко',
+                        artist: 'Рем Дигга',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/24208302/2815224">Слушайте <a href="https://music.yandex.ru/album/2815224/track/24208302">Далеко</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+                    },
+                    {
+                        name: 'Она',
+                        artist: 'Рем Дигга',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/19676891/1844251">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+                    },
+                    {
+                        name: 'Я или он',
+                        artist: 'Рем Дигга',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/45989484/6187789">Слушайте <a href="https://music.yandex.ru/album/6187789/track/45989484">Я или он</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+                    },
+                    {
+                        name: 'Четырнадцать',
+                        artist: 'Рем Дигга',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/27393332/3280080">Слушайте <a href="https://music.yandex.ru/album/3280080/track/27393332">Четырнадцать</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+                    },
+                    {
+                        name: 'Одна любовь',
+                        artist: 'Баста, Рем Дигга',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/48592381/10121686">Слушайте <a href="https://music.yandex.ru/album/10121686/track/48592381">Одна любовь</a> — <a href="https://music.yandex.ru/artist/41191">Баста</a> на Яндекс Музыке</iframe>'
+                    },
+                    {
+                        name: 'Мир на двоих',
+                        artist: 'Xcho',
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/123237021/29998115">Слушайте <a href="https://music.yandex.ru/album/29998115/track/123237021">Мир на двоих</a> — <a href="https://music.yandex.ru/artist/7251201">Xcho</a> на Яндекс Музыке</iframe>'
+                    }
+                ];
+                
+                playlistElement.innerHTML = '';
+                songs.forEach((song, index) => {
+                    const songItem = document.createElement('div');
+                    songItem.className = 'song-item';
+                    
+                    songItem.innerHTML = `
+                        <div class="song-header">
+                            <span class="song-number">${index + 1}</span>
+                            <div class="song-info">
+                                <div class="song-name">${song.name}</div>
+                                <div class="song-artist">${song.artist}</div>
+                            </div>
+                        </div>
+                        <div class="yandex-player">
+                            ${song.embedCode}
+                        </div>
+                    `;
+                    playlistElement.appendChild(songItem);
+                });
+            }
 
             // 3. СПИСОК ПРИЧИН
             function initReasons() {
@@ -1258,6 +1469,106 @@ function initPlaylist() {
                         }
                     });
                 }
+                
+                // КАРТА ВОСПОМИНАНИЙ
+                const mapPins = document.querySelectorAll('.map-pin');
+                const mapInfo = document.getElementById('mapInfo');
+
+                // Функция для показа информации о месте
+                function showMemory(pin) {
+                    const place = pin.getAttribute('data-place');
+                    const date = pin.getAttribute('data-date');
+                    const emoji = pin.querySelector('.pin-emoji').textContent;
+                    
+                    mapInfo.innerHTML = `
+                        <p style="margin:0;">
+                            <span style="font-size:1.5rem; margin-right:10px;">${emoji}</span>
+                            <strong>${place}</strong><br>
+                            <span style="font-size:0.9rem; color:#b34b71;">${date}</span>
+                        </p>
+                    `;
+                    
+                    // Создаем красивое всплывающее окно
+                    const overlay = document.createElement('div');
+                    overlay.className = 'popup-overlay';
+                    
+                    const popup = document.createElement('div');
+                    popup.className = 'memory-popup';
+                    popup.innerHTML = `
+                        <h3>${emoji} ${place}</h3>
+                        <p>💕 ${date}</p>
+                        <p style="font-style:italic;">"Самое прекрасное воспоминание..."</p>
+                        <button onclick="this.parentElement.remove(); document.querySelector('.popup-overlay').remove();">Закрыть</button>
+                    `;
+                    
+                    document.body.appendChild(overlay);
+                    document.body.appendChild(popup);
+                }
+
+                // Добавляем обработчики на все пины
+                mapPins.forEach(pin => {
+                    pin.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showMemory(pin);
+                    });
+                });
+
+                // Добавление нового воспоминания
+                const addMemoryBtn = document.getElementById('addMemoryBtn');
+                if (addMemoryBtn) {
+                    addMemoryBtn.addEventListener('click', () => {
+                        const place = prompt('Какое место добавить?', 'Наше любимое место');
+                        if (!place) return;
+                        
+                        const date = prompt('Когда это было? (например: 01.01.2022)', '');
+                        if (!date) return;
+                        
+                        const emoji = prompt('Какой эмодзи подходит? (например: 💕, 🌅, 🏖️)', '💕');
+                        
+                        // Создаем новый пин
+                        const mapPlaceholder = document.getElementById('mapPlaceholder');
+                        const newPin = document.createElement('div');
+                        newPin.className = 'map-pin';
+                        newPin.setAttribute('data-place', place);
+                        newPin.setAttribute('data-date', date);
+                        
+                        // Случайная позиция
+                        const top = Math.random() * 80 + 10;
+                        const left = Math.random() * 80 + 10;
+                        
+                        newPin.style.top = top + '%';
+                        newPin.style.left = left + '%';
+                        newPin.innerHTML = `
+                            <span class="pin-emoji">${emoji || '📍'}</span>
+                            <span class="pin-label">${place.substring(0, 10)}${place.length > 10 ? '...' : ''}</span>
+                        `;
+                        
+                        newPin.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            showMemory(newPin);
+                        });
+                        
+                        mapPlaceholder.appendChild(newPin);
+                        
+                        // Показываем сообщение
+                        alert('✨ Новое воспоминание добавлено!');
+                    });
+                }
+
+                // Обработка клика вне пинов (закрытие попапа)
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.memory-popup') && !e.target.closest('.map-pin')) {
+                        const popup = document.querySelector('.memory-popup');
+                        const overlay = document.querySelector('.popup-overlay');
+                        if (popup) popup.remove();
+                        if (overlay) overlay.remove();
+                        
+                        // Возвращаем обычный текст в info
+                        if (mapInfo) {
+                            mapInfo.innerHTML = '<p>👆 Нажми на любой значок, чтобы увидеть воспоминание</p>';
+                        }
+                    }
+                });
                 
                 // Сюрприз
                 const surpriseBtn = document.getElementById('surpriseBtn');
