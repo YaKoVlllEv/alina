@@ -397,7 +397,7 @@
         .scratch-card {
             position: relative;
             width: 100%;
-            min-height: 240px;
+            min-height: 280px;
             height: auto;
             border-radius: 30px;
             overflow: hidden;
@@ -412,7 +412,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            min-height: 240px;
+            min-height: 280px;
             background: linear-gradient(145deg, #c0c0c0, #808080);
             background-image: repeating-linear-gradient(
                 45deg,
@@ -469,17 +469,135 @@
             50% { transform: rotate(-2deg) scale(1.05); }
         }
 
-        .scratch-prize {
+        /* ПОДАРОЧНАЯ КАРТА ЗОЛОТОЕ ЯБЛОКО */
+        .golden-apple-card {
+            background: linear-gradient(135deg, #f9e5b7, #e4c580);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(218, 165, 32, 0.4);
+            border: 3px solid #ffd700;
             position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.8s ease-out;
+        }
+
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+                filter: blur(10px);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1) rotate(2deg);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .golden-apple-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 215, 0, 0.2),
+                transparent
+            );
+            animation: shimmer 3s infinite;
+            transform: rotate(45deg);
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .apple-logo {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            animation: appleBounce 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes appleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-size: 2rem;
+            color: #8B4513;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 rgba(255, 215, 0, 0.5);
+        }
+
+        .card-subtitle {
+            font-size: 1.3rem;
+            color: #a0522d;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .card-amount {
+            font-size: 2.5rem;
+            color: #ffd700;
+            text-shadow: 2px 2px 0 #8B4513;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .card-footer {
+            font-size: 1.1rem;
+            color: #8B4513;
+            font-style: italic;
+            border-top: 2px dashed #ffd700;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .sparkles {
+            position: absolute;
             width: 100%;
-            min-height: 240px;
-            height: auto;
-            background: linear-gradient(135deg, #ffd9e6, #ffb3d1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-            padding: 20px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 20px;
+            animation: sparkleFloat 2s infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px) rotate(360deg);
+            }
         }
 
         .prize-content {
@@ -491,57 +609,6 @@
         @keyframes prizeAppear {
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
-        }
-
-        .prize-emoji {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 10px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .prize-text {
-            font-size: 1.6rem;
-            color: #a63b5e;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 0 white;
-        }
-
-        .prize-link {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff4d8c, #ff69b4);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 10px 0;
-            border: 3px solid white;
-            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
-            transition: all 0.3s;
-            letter-spacing: 1px;
-        }
-
-        .prize-link:hover {
-            transform: scale(1.1) translateY(-3px);
-            box-shadow: 0 20px 30px rgba(255, 105, 180, 0.7);
-            background: linear-gradient(45deg, #ff69b4, #ff8dc7);
-        }
-
-        .prize-hint {
-            font-size: 1rem;
-            color: #b34b71;
-            margin-top: 10px;
-            opacity: 0.8;
-            font-style: italic;
         }
 
         /* Эффекты для стирания */
@@ -820,28 +887,27 @@
             }
             
             .scratch-card {
-                min-height: 200px;
+                min-height: 250px;
             }
             
             .scratch-cover {
-                min-height: 200px;
+                min-height: 250px;
             }
             
             .scratch-prize {
-                min-height: 200px;
+                min-height: 250px;
             }
             
-            .prize-link {
-                padding: 12px 25px;
-                font-size: 1.2rem;
+            .apple-logo {
+                font-size: 4rem;
             }
             
-            .prize-emoji {
-                font-size: 3rem;
+            .card-title {
+                font-size: 1.6rem;
             }
             
-            .prize-text {
-                font-size: 1.3rem;
+            .card-amount {
+                font-size: 2rem;
             }
             
             .map-container {
@@ -886,7 +952,7 @@
                 <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
             </div>
 
-            <!-- КНОПКА-СЮРПРИЗ (ПЕРЕНЕСЕНА НАВЕРХ) -->
+            <!-- КНОПКА-СЮРПРИЗ -->
             <div class="surprise-section">
                 <button class="surprise-btn" id="surpriseBtn">
                     <span>✨</span>
@@ -935,10 +1001,20 @@
                             </div>
                             <div class="scratch-prize" id="scratchPrize">
                                 <div class="prize-content">
-                                    <span class="prize-emoji">🎁</span>
-                                    <span class="prize-text">Твой подарок!</span>
-                                    <a href="https://www.ozon.ru" class="prize-link" target="_blank">👉 Нажми сюда 👈</a>
-                                    <div class="prize-hint">(откроется в новом окне)</div>
+                                    <div class="golden-apple-card">
+                                        <div class="apple-logo">🍎✨</div>
+                                        <div class="card-title">Золотое яблоко</div>
+                                        <div class="card-subtitle">Подарочная карта</div>
+                                        <div class="card-amount">5 000 ₽</div>
+                                        <div class="card-footer">На любую косметику и парфюмерию</div>
+                                        <div class="sparkles">
+                                            <div class="sparkle" style="top: 10%; left: 10%; animation-delay: 0s;">✨</div>
+                                            <div class="sparkle" style="top: 20%; right: 15%; animation-delay: 0.5s;">✨</div>
+                                            <div class="sparkle" style="bottom: 15%; left: 20%; animation-delay: 1s;">✨</div>
+                                            <div class="sparkle" style="bottom: 25%; right: 25%; animation-delay: 1.5s;">✨</div>
+                                            <div class="sparkle" style="top: 30%; left: 40%; animation-delay: 2s;">✨</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
