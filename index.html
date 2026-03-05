@@ -918,64 +918,64 @@
                 }
             }
 
-            // 2. ПЛЕЙЛИСТ
-            function initPlaylist() {
-                const playlistElement = document.getElementById('playlist');
-                if (!playlistElement) return;
-                
-                const songs = [
-                    {
-                        name: 'Далеко',
-                        artist: 'Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/2815224/track/24208302">Слушайте <a href="https://music.yandex.ru/album/2815224/track/24208302?utm_source=web&utm_medium=copy_link">Далеко</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-                    },
-                    {
-                        name: 'Она',
-                        artist: 'Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/1844251/track/19676891">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891?utm_source=web&utm_medium=copy_link">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-                    },
-                    {
-                        name: 'Я или он',
-                        artist: 'Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/6187789/track/45989484">Слушайте <a href="https://music.yandex.ru/album/6187789/track/45989484?utm_source=web&utm_medium=copy_link">Я или он</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-                    },
-                    {
-                        name: 'Четырнадцать',
-                        artist: 'Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/3280080/track/27393332">Слушайте <a href="https://music.yandex.ru/album/3280080/track/27393332?utm_source=web&utm_medium=copy_link">Четырнадцать</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
-                    },
-                    {
-                        name: 'Одна любовь',
-                        artist: 'Баста, Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/10121686/track/48592381">Слушайте <a href="https://music.yandex.ru/album/10121686/track/48592381?utm_source=web&utm_medium=copy_link">Одна любовь</a> — <a href="https://music.yandex.ru/artist/41191">Баста</a> на Яндекс Музыке</iframe>'
-                    },
-                    {
-                        name: 'Мир на двоих',
-                        artist: 'Xcho',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/29998115/track/123237021">Слушайте <a href="https://music.yandex.ru/album/29998115/track/123237021?utm_source=web&utm_medium=copy_link">Мир на двоих</a> — <a href="https://music.yandex.ru/artist/7251201">Xcho</a> на Яндекс Музыке</iframe>'
-                    }
-                ];
-                
-                playlistElement.innerHTML = '';
-                songs.forEach((song, index) => {
-                    const songItem = document.createElement('div');
-                    songItem.className = 'song-item';
-                    
-                    songItem.innerHTML = `
-                        <div class="song-header">
-                            <span class="song-number">${index + 1}</span>
-                            <div class="song-info">
-                                <div class="song-name">${song.name}</div>
-                                <div class="song-artist">${song.artist}</div>
-                            </div>
-                        </div>
-                        <div class="yandex-player">
-                            ${song.embedCode}
-                        </div>
-                    `;
-                    playlistElement.appendChild(songItem);
-                });
-            }
+           // 2. ПЛЕЙЛИСТ - ИСПРАВЛЕННАЯ ВЕРСИЯ С РАБОЧИМИ ССЫЛКАМИ
+function initPlaylist() {
+    const playlistElement = document.getElementById('playlist');
+    if (!playlistElement) return;
+    
+    const songs = [
+        {
+            name: 'Далеко',
+            artist: 'Рем Дигга',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/24208302/2815224">Слушайте <a href="https://music.yandex.ru/album/2815224/track/24208302">Далеко</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+        },
+        {
+            name: 'Она',
+            artist: 'Рем Дигга',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/19676891/1844251">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+        },
+        {
+            name: 'Я или он',
+            artist: 'Рем Дигга',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/45989484/6187789">Слушайте <a href="https://music.yandex.ru/album/6187789/track/45989484">Я или он</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+        },
+        {
+            name: 'Четырнадцать',
+            artist: 'Рем Дигга',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/27393332/3280080">Слушайте <a href="https://music.yandex.ru/album/3280080/track/27393332">Четырнадцать</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
+        },
+        {
+            name: 'Одна любовь',
+            artist: 'Баста, Рем Дигга',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/48592381/10121686">Слушайте <a href="https://music.yandex.ru/album/10121686/track/48592381">Одна любовь</a> — <a href="https://music.yandex.ru/artist/41191">Баста</a> на Яндекс Музыке</iframe>'
+        },
+        {
+            name: 'Мир на двоих',
+            artist: 'Xcho',
+            embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/#track/123237021/29998115">Слушайте <a href="https://music.yandex.ru/album/29998115/track/123237021">Мир на двоих</a> — <a href="https://music.yandex.ru/artist/7251201">Xcho</a> на Яндекс Музыке</iframe>'
+        }
+    ];
+    
+    playlistElement.innerHTML = '';
+    songs.forEach((song, index) => {
+        const songItem = document.createElement('div');
+        songItem.className = 'song-item';
+        
+        songItem.innerHTML = `
+            <div class="song-header">
+                <span class="song-number">${index + 1}</span>
+                <div class="song-info">
+                    <div class="song-name">${song.name}</div>
+                    <div class="song-artist">${song.artist}</div>
+                </div>
+            </div>
+            <div class="yandex-player">
+                ${song.embedCode}
+            </div>
+        `;
+        playlistElement.appendChild(songItem);
+    });
+}
 
             // 3. СПИСОК ПРИЧИН
             function initReasons() {
