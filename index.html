@@ -399,6 +399,134 @@
             }
         }
 
+        /* СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ - НОВЫЙ БЛОК */
+        .scratch-section {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .scratch-title {
+            color: #b34b71;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .scratch-card {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            background: #ffe4f0;
+        }
+
+        .scratch-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #c0c0c0, #a0a0a0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: opacity 0.3s;
+            border: 3px solid #ff99c8;
+        }
+
+        .scratch-cover.scratched {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scratch-pattern {
+            background: repeating-linear-gradient(
+                45deg,
+                #d0d0d0,
+                #d0d0d0 10px,
+                #e0e0e0 10px,
+                #e0e0e0 20px
+            );
+            padding: 20px;
+            border-radius: 20px;
+            color: #ff4d8c;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            text-shadow: 2px 2px 0 white;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .scratch-prize {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffd9e6, #ffb3d1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .prize-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .prize-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .prize-text {
+            font-size: 1.5rem;
+            color: #a63b5e;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .prize-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff4d8c, #ff99c8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0;
+            border: 2px solid white;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .prize-link:hover {
+            transform: scale(1.05);
+        }
+
+        .prize-hint {
+            font-size: 0.9rem;
+            color: #b34b71;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .scratch-hint {
+            margin-top: 10px;
+            color: #b34b71;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
         /* Слайдер */
         .slider-container {
             position: relative;
@@ -515,6 +643,15 @@
                 height: 36px;
                 font-size: 24px;
             }
+            
+            .scratch-card {
+                height: 180px;
+            }
+            
+            .prize-link {
+                padding: 12px 20px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -527,19 +664,19 @@
             <h1>С 8 Марта, <br><span id="girlName">Алина</span>!</h1>
             
             <div class="poem">
-    <p>Моя любимая!</p>
-    <p>С 8 Марта — с праздником весны, красоты и нежности! Ты — самое прекрасное, что случилось в моей жизни. Рядом с тобой даже самый хмурый день становится солнечным, а обычный момент — особенным.</p>
-    <p>Спасибо тебе за твою улыбку, которая согревает лучше любого солнца. За твои глаза, в которых хочется тонуть каждый день. За твою доброту, заботу и тепло, которым ты меня окружаешь.</p>
-    <p>Пусть в твоей жизни всегда будет весна — в душе, в сердце, в мыслях. Пусть каждый день дарит тебе поводы для радости, а все твои мечты обязательно сбудутся. Ты достойна самого лучшего в этом мире!</p>
-    <p>С праздником, моя родная! 💐🌸💕</p>
-</div>
+                <p>Моя любимая!</p>
+                <p>С 8 Марта — с праздником весны, красоты и нежности! Ты — самое прекрасное, что случилось в моей жизни. Рядом с тобой даже самый хмурый день становится солнечным, а обычный момент — особенным.</p>
+                <p>Спасибо тебе за твою улыбку, которая согревает лучше любого солнца. За твои глаза, в которых хочется тонуть каждый день. За твою доброту, заботу и тепло, которым ты меня окружаешь.</p>
+                <p>Пусть в твоей жизни всегда будет весна — в душе, в сердце, в мыслях. Пусть каждый день дарит тебе поводы для радости, а все твои мечты обязательно сбудутся. Ты достойна самого лучшего в этом мире!</p>
+                <p>С праздником, моя родная! 💐🌸💕</p>
+            </div>
 
             <!-- СЧЕТЧИК ОТНОШЕНИЙ -->
-<div class="counter-section">
-    <div class="counter-title">💕 Мы вместе уже</div>
-    <div class="counter-number" id="daysCounter">0 дней</div>
-    <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
-</div>
+            <div class="counter-section">
+                <div class="counter-title">💕 Мы вместе уже</div>
+                <div class="counter-number" id="daysCounter">0 дней</div>
+                <div id="timeCounter" style="font-size: 1.8rem; font-weight: bold; color: #ff4d8c; margin-top: 10px; font-family: monospace;">00:00:00</div>
+            </div>
 
             <!-- ПЛЕЙЛИСТ -->
             <div class="playlist-section">
@@ -579,6 +716,25 @@
                 <div class="surprise-message" id="surpriseMessage"></div>
             </div>
 
+            <!-- НОВЫЙ БЛОК: СТИРАЕМЫЙ ЛОТЕРЕЙНЫЙ БИЛЕТ -->
+            <div class="scratch-section">
+                <div class="scratch-title">🎫 Сотри, чтобы узнать подарок</div>
+                <div class="scratch-card" id="scratchCard">
+                    <div class="scratch-cover" id="scratchCover">
+                        <div class="scratch-pattern">🌟🌟🌟<br>СОТРИ МЕНЯ<br>🌟🌟🌟</div>
+                    </div>
+                    <div class="scratch-prize" id="scratchPrize">
+                        <div class="prize-content">
+                            <span class="prize-emoji">🎁</span>
+                            <span class="prize-text">Твой подарок!</span>
+                            <a href="https://www.ozon.ru" class="prize-link" target="_blank">👉 Нажми сюда 👈</a>
+                            <div class="prize-hint">(откроется в новом окне)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-hint">Проведи пальцем по серому слою, чтобы стереть</div>
+            </div>
+
             <!-- СЛАЙДЕР С ФОТО -->
             <div class="slider-container">
                 <div class="slider">
@@ -614,107 +770,74 @@
     </div>
 
     <script>
-        // ЕДИНЫЙ СКРИПТ - всё в одном месте, без дублирования
-
-            (function() {
-    // ДАТА НАЧАЛА ОТНОШЕНИЙ: 10 октября 2021
-    const startDate = new Date(2021, 9, 10, 0, 0, 0);
-    
-    // Функция для склонения слов...
-    // ... остальной код
-                
+        (function() {
+            // ДАТА НАЧАЛА ОТНОШЕНИЙ: 10 октября 2021
+            const startDate = new Date(2021, 9, 10, 0, 0, 0);
+            
             // Функция для склонения слов
-            function getYearText(years) {
-                if (years % 10 === 1 && years % 100 !== 11) return 'год';
-                if (years % 10 >= 2 && years % 10 <= 4 && (years % 100 < 10 || years % 100 >= 20)) return 'года';
-                return 'лет';
-            }
-
-            function getMonthText(months) {
-                if (months % 10 === 1 && months % 100 !== 11) return 'месяц';
-                if (months % 10 >= 2 && months % 10 <= 4 && (months % 100 < 10 || months % 100 >= 20)) return 'месяца';
-                return 'месяцев';
-            }
-
-            function getDayText(days) {
-                if (days % 10 === 1 && days % 100 !== 11) return 'день';
-                if (days % 10 >= 2 && days % 10 <= 4 && (days % 100 < 10 || days % 100 >= 20)) return 'дня';
-                return 'дней';
-            }
-
-                        // 1. СЧЕТЧИК ДНЕЙ И ВРЕМЕНИ
-function updateCounter() {
-    const counterElement = document.getElementById('daysCounter');
-    const timeElement = document.getElementById('timeCounter');
-    if (!counterElement || !timeElement) return;
-    
-    const now = new Date();
-    
-    // Разница в миллисекундах
-    const diffMs = now - startDate;
-    
-    // Дни
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
-    // Часы, минуты, секунды (остаток от дней)
-    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-    
-    // Склонение слова "день"
-    let daysText = 'дней';
-    if (diffDays % 10 === 1 && diffDays % 100 !== 11) daysText = 'день';
-    else if (diffDays % 10 >= 2 && diffDays % 10 <= 4 && (diffDays % 100 < 10 || diffDays % 100 >= 20)) daysText = 'дня';
-    
-    counterElement.textContent = diffDays + ' ' + daysText;
-    
-    // Форматируем время с ведущими нулями
-    const hoursStr = hours.toString().padStart(2, '0');
-    const minutesStr = minutes.toString().padStart(2, '0');
-    const secondsStr = seconds.toString().padStart(2, '0');
-    
-    timeElement.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
-    
-    addDetailedInfo(startDate, now);
-}
-
-            function addDetailedInfo(startDate, now) {
-                const counterSection = document.querySelector('.counter-section');
-                if (!counterSection) return;
-                
-                const oldInfo = document.getElementById('detailedInfo');
-                if (oldInfo) oldInfo.remove();
-                
-                let years = now.getFullYear() - startDate.getFullYear();
-                let months = now.getMonth() - startDate.getMonth();
-                let days = now.getDate() - startDate.getDate();
-                
-                if (days < 0) {
-                    months--;
-                    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-                    days += lastMonth.getDate();
-                }
-                
-                if (months < 0) {
-                    years--;
-                    months += 12;
-                }
-                
-                const yearText = getText(years, 'год', 'года', 'лет');
-                const monthText = getText(months, 'месяц', 'месяца', 'месяцев');
-                const dayText = getText(days, 'день', 'дня', 'дней');
-                
-                const detailedInfo = document.createElement('div');
-                detailedInfo.id = 'detailedInfo';
-                detailedInfo.innerHTML = `✨ ${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText} ✨`;
-                
-                counterSection.appendChild(detailedInfo);
-            }
-
             function getText(number, form1, form2, form5) {
                 if (number % 10 === 1 && number % 100 !== 11) return form1;
                 if (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) return form2;
                 return form5;
+            }
+
+            // 1. СЧЕТЧИК ДНЕЙ И ВРЕМЕНИ
+            function updateCounter() {
+                const counterElement = document.getElementById('daysCounter');
+                const timeElement = document.getElementById('timeCounter');
+                if (!counterElement || !timeElement) return;
+                
+                const now = new Date();
+                
+                const diffMs = now - startDate;
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                
+                const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+                
+                let daysText = 'дней';
+                if (diffDays % 10 === 1 && diffDays % 100 !== 11) daysText = 'день';
+                else if (diffDays % 10 >= 2 && diffDays % 10 <= 4 && (diffDays % 100 < 10 || diffDays % 100 >= 20)) daysText = 'дня';
+                
+                counterElement.textContent = diffDays + ' ' + daysText;
+                
+                const hoursStr = hours.toString().padStart(2, '0');
+                const minutesStr = minutes.toString().padStart(2, '0');
+                const secondsStr = seconds.toString().padStart(2, '0');
+                
+                timeElement.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+                
+                const counterSection = document.querySelector('.counter-section');
+                if (counterSection) {
+                    const oldInfo = document.getElementById('detailedInfo');
+                    if (oldInfo) oldInfo.remove();
+                    
+                    let years = now.getFullYear() - startDate.getFullYear();
+                    let months = now.getMonth() - startDate.getMonth();
+                    let days = now.getDate() - startDate.getDate();
+                    
+                    if (days < 0) {
+                        months--;
+                        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                        days += lastMonth.getDate();
+                    }
+                    
+                    if (months < 0) {
+                        years--;
+                        months += 12;
+                    }
+                    
+                    const yearText = getText(years, 'год', 'года', 'лет');
+                    const monthText = getText(months, 'месяц', 'месяца', 'месяцев');
+                    const dayText = getText(days, 'день', 'дня', 'дней');
+                    
+                    const detailedInfo = document.createElement('div');
+                    detailedInfo.id = 'detailedInfo';
+                    detailedInfo.innerHTML = `✨ ${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText} ✨`;
+                    
+                    counterSection.appendChild(detailedInfo);
+                }
             }
 
             // 2. ПЛЕЙЛИСТ
@@ -731,7 +854,7 @@ function updateCounter() {
                     {
                         name: 'Она',
                         artist: 'Рем Дигга',
-                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/1844251/track/19676891">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891?utm_source=web&utm_medium=copy_link">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe></iframe>'
+                        embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/1844251/track/19676891">Слушайте <a href="https://music.yandex.ru/album/1844251/track/19676891?utm_source=web&utm_medium=copy_link">Она</a> — <a href="https://music.yandex.ru/artist/588511">Рем Дигга</a> на Яндекс Музыке</iframe>'
                     },
                     {
                         name: 'Я или он',
@@ -753,7 +876,6 @@ function updateCounter() {
                         artist: 'Xcho',
                         embedCode: '<iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:180px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/29998115/track/123237021">Слушайте <a href="https://music.yandex.ru/album/29998115/track/123237021?utm_source=web&utm_medium=copy_link">Мир на двоих</a> — <a href="https://music.yandex.ru/artist/7251201">Xcho</a> на Яндекс Музыке</iframe>'
                     }
-                    
                 ];
                 
                 playlistElement.innerHTML = '';
@@ -829,7 +951,9 @@ function updateCounter() {
                 
                 if (!slides) return;
                 
-                const totalSlides = document.querySelectorAll('.slide').length;
+                const slideItems = document.querySelectorAll('.slide');
+                const totalSlides = slideItems.length;
+                
                 if (totalSlides === 0) return;
                 
                 let currentIndex = 0;
@@ -861,6 +985,22 @@ function updateCounter() {
                 
                 if (prevBtn) prevBtn.onclick = () => goToSlide(currentIndex - 1);
                 if (nextBtn) nextBtn.onclick = () => goToSlide(currentIndex + 1);
+                
+                let touchStartX = 0;
+                slides.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, {passive: true});
+                
+                slides.addEventListener('touchend', (e) => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    
+                    if (diff > 50) {
+                        goToSlide(currentIndex + 1);
+                    } else if (diff < -50) {
+                        goToSlide(currentIndex - 1);
+                    }
+                }, {passive: true});
                 
                 goToSlide(0);
             }
@@ -913,18 +1053,50 @@ function updateCounter() {
                     });
                 }
                 
-                // Добавление причины
+                // Добавление причины (кнопка)
                 const addReasonBtn = document.getElementById('addReasonBtn');
                 if (addReasonBtn) {
                     addReasonBtn.addEventListener('click', function() {
                         const newReason = prompt('Напиши еще одну причину:', 'Твоя...');
-                        if (newReason) {
+                        if (newReason && newReason.trim() !== '') {
                             const reasonsList = document.getElementById('reasonsList');
                             const li = document.createElement('li');
                             li.className = 'reason-item';
                             li.innerHTML = `<span class="reason-emoji">❤️</span> ${newReason}`;
                             reasonsList.appendChild(li);
                         }
+                    });
+                } else {
+                    const reasonsSection = document.querySelector('.reasons-section');
+                    if (reasonsSection) {
+                        const btn = document.createElement('button');
+                        btn.className = 'add-reason-btn';
+                        btn.id = 'addReasonBtn';
+                        btn.textContent = '➕ Добавить причину';
+                        btn.onclick = function() {
+                            const newReason = prompt('Напиши еще одну причину:', 'Твоя...');
+                            if (newReason && newReason.trim() !== '') {
+                                const reasonsList = document.getElementById('reasonsList');
+                                const li = document.createElement('li');
+                                li.className = 'reason-item';
+                                li.innerHTML = `<span class="reason-emoji">❤️</span> ${newReason}`;
+                                reasonsList.appendChild(li);
+                            }
+                        };
+                        reasonsSection.appendChild(btn);
+                    }
+                }
+                
+                // НОВЫЙ КОД: Стираемый билет
+                const scratchCover = document.getElementById('scratchCover');
+                if (scratchCover) {
+                    scratchCover.addEventListener('click', function() {
+                        this.classList.add('scratched');
+                    });
+                    
+                    scratchCover.addEventListener('touchstart', function(e) {
+                        e.preventDefault();
+                        this.classList.add('scratched');
                     });
                 }
                 
@@ -951,11 +1123,11 @@ function updateCounter() {
                         
                         setTimeout(() => {
                             messageElement.style.display = 'none';
-                        }, 10000);
+                        }, 3000);
                     });
                 }
                 
-                // Обновление счетчика каждый час
+                // Обновление счетчика каждую секунду
                 setInterval(updateCounter, 1000);
             });
         })();
